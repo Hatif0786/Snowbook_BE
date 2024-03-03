@@ -5,12 +5,21 @@ dotenv.config()
 const dbConnect = require('./config/dbConnect')
 const morgan = require("morgan")
 const bodyParser = require('body-parser')
+const userRouter = require('./routes/userRoute')
+const noteRouter = require('./routes/noteRoute')
+const {errorHandler, notFound} = require('./middlewares/errorHandler')
 
 dbConnect();
 app.use(morgan('combined'))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+
+app.use('/api/user', userRouter)
+app.use('/api/note', noteRouter)
+
+app.use(errorHandler);
+app.use(notFound);
 
 
 

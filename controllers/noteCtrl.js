@@ -6,6 +6,7 @@ const {validationResult} = require('express-validator')
 
 const createNote = asyncHandler(async (req, res) => {
     const errors = validationResult(req);
+    console.log(req.body);
     if(errors.isEmpty()) {
         try{
             await Note.create({

@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express();
 const dotenv = require('dotenv')
+const cors = require('cors');
 dotenv.config()
 const dbConnect = require('./config/dbConnect')
 const morgan = require("morgan")
@@ -11,13 +12,13 @@ const {errorHandler, notFound} = require('./middlewares/errorHandler')
 
 dbConnect();
 app.use(morgan('combined'))
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: false }));
 
-
+app.use(cors())
+app.use(express.json())
 app.use('/api/user', userRouter)
 app.use('/api/note', noteRouter)
-
 app.use(errorHandler);
 app.use(notFound);
 
